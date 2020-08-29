@@ -3,8 +3,8 @@
 Projeto de backend para uma rede social Labook.
 
 # Endpoints
-- http://localhost:3000/user/signup
-- http://localhost:3000/user/signin
+- POST (http://localhost:3000/user/signup)
+- POST (http://localhost:3000/user/signin)
 
 # Tecnologias
 - Typescript
