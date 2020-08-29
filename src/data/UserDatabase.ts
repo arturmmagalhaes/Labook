@@ -37,4 +37,5 @@ export class UserDatabase extends BaseDatabase {
             super.destroyConnection();
         }
     }
+    
 }
