@@ -1,14 +1,15 @@
 import { BaseDatabase } from "./BaseDatabase";
+import { FollowDTO } from "../model/input/FollowDTO";
 
 export class FollowDatabase extends BaseDatabase {
     
     private static TABLE_NAME = "Followers";
 
-    public async getFollow (idUser: string, idFollower: string) {
+    public async getFollow (data: FollowDTO) {
         try{
             const verify = await super.getConnection().raw(`
                 SELECT * FROM ${FollowDatabase.TABLE_NAME} 
-                WHERE idUser = "${idUser}" and idFollower = "${idFollower}"
+                WHERE idUser = "${data.idUser}" and idFollower = "${data.idFollower}"
             `);
             return verify;
         } catch (error) {
@@ -16,11 +17,24 @@ export class FollowDatabase extends BaseDatabase {
         }
     }
 
-    public async followUser (idUser: string, idFollower: string): Promise<void> {
+    public async followUser (data: FollowDTO): Promise<void> {
         try {
             await super.getConnection().raw(`
                 INSERT INTO ${FollowDatabase.TABLE_NAME}
-                VALUES ("${idUser}", "${idFollower}")
+                VALUES ("${data.idUser}", "${data.idFollower}")
+            `);
+        } catch (error) {
+            throw new Error (error.message);
+        } finally {
+            super.destroyConnection();
+        }
+    }
+
+    public async unFollowUser (data: FollowDTO): Promise<void> {
+        try {
+            await super.getConnection().raw(`
+                DELETE FROM ${FollowDatabase.TABLE_NAME}
+                WHERE idUser = "${data.idUser}" AND idFollower = "${data.idFollower}"
             `);
         } catch (error) {
             throw new Error (error.message);

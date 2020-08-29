@@ -9,7 +9,7 @@ dotenv.config();
 const app = express();
 app.use(express.json());
 app.use("/user", userRouter);
-app.use("/follow", FollowRouter);
+app.use("/friend", FollowRouter);
 
 const server = app.listen(3000, () => {
     if (server) {
