@@ -3,6 +3,7 @@ import { Authenticator } from '../services/Authenticator';
 import { PostBusiness } from '../business/PostBusiness';
 import { IdGenerator } from '../services/idGenerator';
 import moment from 'moment';
+import { PostDatabase } from '../data/PostDatabase';
 
 export class PostController {
 
@@ -31,4 +32,22 @@ export class PostController {
             });
         }
     }
+
+    public async getFeed(req: Request, res: Response) {
+        try {
+            const post = new PostDatabase();
+            const token = new Authenticator().getData(req.headers.authorization as string);
+            
+            const result = await post.getFeed(token.id);
+            
+            res.status(200).send({
+                message: result
+            })
+        } catch (error) {
+            res.status(400).send({
+                message: error.message
+            });
+        }
+    }
+
 }
