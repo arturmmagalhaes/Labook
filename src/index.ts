@@ -3,6 +3,7 @@ import { AddressInfo } from 'net';
 import dotenv from 'dotenv';
 import { userRouter } from './router/UserRouter';
 import { FollowRouter } from './router/FollowRouter';
+import { PostRouter } from './router/PostRouter';
 
 dotenv.config();
 
@@ -10,6 +11,7 @@ const app = express();
 app.use(express.json());
 app.use("/user", userRouter);
 app.use("/friend", FollowRouter);
+app.use("/post", PostRouter);
 
 const server = app.listen(3000, () => {
     if (server) {
