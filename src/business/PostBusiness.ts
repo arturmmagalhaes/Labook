@@ -1,6 +1,7 @@
 import { PostDatabase } from "../data/PostDatabase";
 import { PostDTO } from "../model/input/PostDTO";
 import { GetFeedDTO } from "../model/output/GetFeedDTO";
+import { GetFeedTypeDTO } from "../model/output/GetFeedTypeDTO";
 
 export class PostBusiness {
 
@@ -29,6 +30,18 @@ export class PostBusiness {
             return result;
         } catch (error) {
             throw new Error(error.message);
+        }
+    }
+
+    public async getFeedType(type: string): Promise<GetFeedTypeDTO> {
+        try {
+            if(!type) {
+                throw new Error ("Invalid Type");
+            }
+
+            return await this.post.getFeedType(type);
+        } catch (error) {
+            throw new Error (error.message);
         }
     }
     

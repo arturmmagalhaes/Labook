@@ -1,6 +1,7 @@
 import { BaseDatabase } from "./BaseDatabase";
 import { PostDTO } from "../model/input/PostDTO";
 import { GetFeedDTO } from "../model/output/GetFeedDTO";
+import { GetFeedTypeDTO } from "../model/output/GetFeedTypeDTO";
 
 export class PostDatabase extends BaseDatabase {
     
@@ -43,6 +44,28 @@ export class PostDatabase extends BaseDatabase {
             throw new Error (error.message);
         } finally {
             super.destroyConnection();
+        }
+    }
+
+    public async getFeedType(type: string): Promise<GetFeedTypeDTO> {
+        try {
+            const result = await super.getConnection().raw(`
+                SELECT ${PostDatabase.TABLE_NAME}.id, text, create_at, type FROM ${PostDatabase.TABLE_NAME}
+                WHERE type = "${type}";
+            `);
+
+            return result[0].map((item: any) => {
+                return {
+                    id: item.id,
+                    text: item.text,
+                    create_at: item.create_at,
+                    type: item.type
+                }
+            });
+        } catch (error) {
+            throw new Error (error.message);
+        } finally {
+            await super.destroyConnection();
         }
     }
 

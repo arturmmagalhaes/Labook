@@ -50,4 +50,20 @@ export class PostController {
         }
     }
 
+    public async getFeedType(req: Request, res: Response) {
+        try {
+            const post = new PostBusiness();
+            const type = req.query.type as string;
+            const result = await post.getFeedType(type);
+
+            res.status(200).send({
+                message: result
+            });
+        } catch (error) {
+            res.status(400).send({
+                message: error.message
+            });
+        }
+    }
+
 }

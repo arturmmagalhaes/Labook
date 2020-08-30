@@ -6,3 +6,4 @@ const post = new PostController();
 
 PostRouter.post("/", post.createPost);
 PostRouter.get("/feed", post.getFeed);
+PostRouter.get("/type", post.getFeedType)
